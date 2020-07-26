@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Dashboard</title>
+		<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+	</head>
+	<body>
+        
+		{% if messages %} {% for message in messages %}
+		<span style="color: white; background-color: red;">{{ message }}</span>
+		{% endfor %} {% endif %}
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+                <a class="navbar-brand" href="/dashboard">Trip Buddy!</a>
+                <div class ="ml-auto navbar-text"> Hello {{ user.get_full_name }} | <a href='/logout'> Logout </a></div>
+            </nav>
+
+    <div class = 'container'>
+        <div class="mt-2 text-center">
+            <a href ='/new-trip/'><button class='btn btn-success btn-lg mt-3' type='button'>Add a new Trip!</button></a>
+        </div>
+        <h2 class= 'mt-4'>Your Trip Schedules:</h2>
+        <table class= "table" border="1">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Description</th>
+                    <th>Travel Start Date</th>
+                    <th>Travel End Date</th>
+                    <th>Plan</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                
+                {% for trip in my_trips %}
+                <tr>
+                    <td><a href='/detail-trip/{{ trip.id }}'> {{ trip.destination }} </a></td>
+                    <td>{{ trip.start_date}}</td>
+                    <td> {{ trip.end_date}}</td>
+                    <td> {{ trip.plan }} </td>
+                    <td><a href='/delete-trip/{{ trip.id }}'>Delete</a> | <a href='/edit-trip/{{ trip.id }}'>Edit</a></td>
+                </tr>
+                {% endfor %}
+                {% for trip in join_trips %}
+                <tr>
+                    <td><a href='/detail-trip/{{ trip.id }}'> {{ trip.destination }} </a></td>
+                    <td>{{ trip.start_date}}</td>
+                    <td> {{ trip.end_date}}</td>
+                    <td> {{ trip.plan }} </td>
+                    <td><a href='/cancel-trip/{{ trip.id }}'>Cancel</a></td>
+                </tr>
+                {% endfor %}
+        </table>
+        
+        <h2 class= 'mt-5'>Other Travelers Trip Plans:</h2>
+        <table class= "table" border="1">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Travel Start Date</th>
+                    <th>Travel End Date</th>
+                    <th>Do You Want to Join?</th>
+                </tr>
+                </thead>
+             
+                {% for trip in all_other_trips %}
+                <tr>
+                    <td><a href='/detail-trip/{{ trip.id }}'>{{ trip.destination }}</a> </td>
+                    <td>{{ trip.start_date}}</td>
+                    <td> {{ trip.end_date}}</td>
+                    <td><a href='/join-trip/{{ trip.id }}'> Join </td>
+                </tr>
+                {% endfor %}
+            
+        </table>
+
+    </div>
+		
+	</body>
+</html>

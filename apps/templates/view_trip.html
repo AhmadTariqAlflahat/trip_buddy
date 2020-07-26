@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>View Trip</title>
+		<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+			<a class="navbar-brand" href="/dashboard">Trip Details</a>
+			<div class="ml-auto navbar-text">
+				<a href="/dashboard">Home</a> | <a href="/logout"> Log Off </a>
+			</div>
+		</nav>
+		{% if messages %} {% for message in messages %}
+		<span style="color: white; background-color: red;">{{ message }}</span>
+		{% endfor %} {% endif %}
+
+		<h3>Hello {{ user.get_full_name }}! Let's Update Your Trip!</h3>
+
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<h2>{{ trip.destination }}</h2>
+					<p class="text-muted">Start date: {{ trip.start_date }}</p>
+					<p class="text-muted">End date: {{trip.end_date }}</p>
+					<p class="text-muted">Created on: {{ trip.created_at }}</p>
+					<p class="text-muted">Last Update: {{ trip.updated_at }}</p>
+					<p class="text-muted">Plan: {{ trip.plan }}</p>
+				</div>
+			</div>
+		</div>
+		<div class="col ml-5 pl-5">
+			<h2>People who have joined this trip:</h2>
+			<ul>
+				{% for person in people %}
+				<h5>{{ person.user.get_full_name }}</h5>
+				{% endfor %}
+			</ul>
+		</div>
+	</body>
+</html>

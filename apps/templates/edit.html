@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Edit Trip ({{ trip.destination }})</title>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+	</head>
+	<body>
+		{% if messages %} {% for message in messages %}
+		<span style="color: white; background-color: red;">{{ message }}</span>
+		{% endfor %} {% endif %}
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+                <a class="navbar-brand" href="/dashboard">Trip Buddy!</a>
+                <div class ="ml-auto navbar-text"> Hello {{ user.get_full_name }} | <a href='/logout'> Logout </a></div>
+            </nav>
+
+    <div class = 'container'>
+
+		<h3>Hello {{ user.get_full_name }}! Let's Update Your Trip!</h3>
+		<form action="/edit-trip/" method="post">
+            {% csrf_token %}
+            <div class='row'>
+			<label for="destination">Destination</label>
+			<input
+				type="text"
+				name="destination"
+				id="destination"
+				placeholder="Destination"
+                value="{{ trip.destination }}"
+                class='form-control'
+            />
+            </div>
+            <div class='row'>
+			<label for="startDate">Start Date</label>
+			<input
+				type="date"
+				name="start_date"
+				id="startDate"
+				placeholder="Start Date"
+                value="{{ trip.start_date }}"
+                class='form-control'
+            />
+            </div>
+            <div class='row'>
+			<label for="endDate">End Date</label>
+			<input
+				type="date"
+				name="end_date"
+				id="endDate"
+				placeholder="End Date"
+                value="{{ trip.end_date }}"
+                class='form-control'
+            />
+            </div>
+<div class='row'>
+			<label for="plan">Plan</label>
+			<textarea type="text" name="plan" id="plan" placeholder="Plan" class='form-control'>
+                {{ trip.plan }}
+            </textarea
+            >
+            </div>
+			<a href="/dashboard/" class="btn btn-dark">Cancel</a>
+			<button type="submit" class="btn btn-primary">Update</button>
+		</form>
+	</body>
+</html>
